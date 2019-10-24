@@ -8,7 +8,7 @@ app.get("/", (req, res) => {
     res.status(200).send("Meetup Test");
 });
 
-app.listen(port, () => {
+/*app.listen(port, () => {
     console.log(`Listening to requests on http://localhost:${port}`);
-});
+});*/
 exports = app;
