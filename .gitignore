@@ -1,4 +1,6 @@
 
-api/.DS_Store
-api/.idea/workspace.xml
-api/node_modules
+serverSide/.DS_Store
+serverSide/.idea
+serverSide/node_modules
+.idea
+.DS_Store
