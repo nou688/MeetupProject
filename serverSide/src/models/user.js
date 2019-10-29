@@ -1,6 +1,6 @@
 // External Dependancies
 const mongoose = require('mongoose');
-const memberSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     first_name: String,
     last_name: String,
     company_name: String,
@@ -10,8 +10,8 @@ const memberSchema = new mongoose.Schema({
     state:String,
     zip:String,
     phone1:String,
-    phone2:String,
+    password:string,
     email:String,
     web:String
 });
-module.expo
+module.exports = mongoose.model('User', userSchema);
