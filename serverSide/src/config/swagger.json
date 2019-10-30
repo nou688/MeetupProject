@@ -1,17 +1,249 @@
 {
     "swagger": "2.0",
-        "info": {
-            "title": "MeetupAPI",
-            "description": "Building  REST API with Node.js, MongoDB, express and Swagger",
-            "version": "1.0.0"
+    "info": {
+        "version": "1.0.0",
+        "title": "meetup API",
+        "description": "meetup API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1",
+    "tags": [
+        {
+            "name": "Events",
+            "description": "API for events"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/events": {
+            "post": {
+                "tags": [
+                    "Events"
+                ],
+                "description": "Create new event in system",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "in": "body",
+                        "description": "event that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/Event"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "New Event is created",
+                        "schema": {
+                            "$ref": "#/definitions/Event"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Get all events in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Events"
+                        }
+                    }
+                }
+            }
         },
-        "externalDocs": {
-            "url": "https://swagger.io",
-            "description": "Find more info here"
+        "/event/{code}": {
+            "parameters": [
+                {
+                    "name": "code",
+                    "in": "path",
+                    "required": true,
+                    "description": "code of event that we want to find",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Get event with given code",
+                "responses": {
+                    "200": {
+                        "description": "Event is found",
+                        "schema": {
+                            "$ref": "#/definitions/Event"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete event with given code",
+                "tags": [
+                    "Events"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Event is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/Event"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update event with give code",
+                "tags": [
+                    "Events"
+                ],
+                "parameters": [
+                    {
+                        "name": "event",
+                        "in": "body",
+                        "description": "Event with new values of properties",
+                        "schema": {
+                            "$ref": "#/definitions/Event"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Event is updated",
+                        "schema": {
+                            "$ref": "#/definitions/Event"
+                        }
+                    }
+                }
+            }
         },
-        "host": "localhost",
-        "schemes": ["http"],
-        "consumes": ["application/json"],
-        "produces": ["application/json"]
-
+        "/members": {
+            "post": {
+                "tags": [
+                    "Members"
+                ],
+                "description": "Create new member in event",
+                "parameters": [
+                    {
+                        "name": "member",
+                        "in": "body",
+                        "description": "member that we want to add",
+                        "schema": {
+                            "$ref": "#/definitions/Member"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "New Member is created",
+                        "schema": {
+                            "$ref": "#/definitions/Member"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Get all Members in event",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Members"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Event": {
+            "required": [
+                "code"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "title": {
+                    "type": "string"
+                },
+                "dateStart": {
+                    "type": "string"
+                },
+                "dateEnd": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                }
+            }
+        },
+        "Events": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Event"
+            }
+        },
+        "Member": {
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "company_name": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "phone1": {
+                    "type": "string"
+                },
+                "web": {
+                    "type": "string"
+                }
+            }
+        },
+        "Members": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Member"
+            }
+        }
+    }
 }
