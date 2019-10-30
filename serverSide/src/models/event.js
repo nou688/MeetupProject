@@ -1,6 +1,6 @@
 // External Dependancies
 
-const Member = require('member');
+const Member = require('./member');
 const mongoose = require('mongoose');
 const eventSchema = new mongoose.Schema({
     code: String,
@@ -9,6 +9,6 @@ const eventSchema = new mongoose.Schema({
     dateEnd: String,
     description: String,
     address: String,
-    members: [Member],
+    members: [{type: mongoose.Schema.Types.ObjectId, ref: 'Member'}],
 });
 module.exports = mongoose.model('Event', eventSchema);

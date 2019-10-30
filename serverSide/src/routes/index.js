@@ -1,11 +1,11 @@
-/ Import our Controllers
-const eventController = require('../controller/eventController')
+// Import our Controllers
+const eventController = require('../controller/eventController');
 
-const routes = [
+/*const routes = [
     {
         method: 'GET',
         url: '/api/events',
-        handler: eventController.getEvents
+        handler:
     },
     {
         method: 'GET',
@@ -15,7 +15,7 @@ const routes = [
     {
         method: 'POST',
         url: '/api/events',
-        handler: eventController.addEvent,
+        handler: ,
        // schema: documentation.addEventSchema
     },
     {
@@ -28,6 +28,22 @@ const routes = [
         url: '/api/events/:code',
         handler: eventController.deleteEvent
     }
-]
+]*/
+var express = require('express');
+const routes = express.Router();
+
+// middleware that is specific to this router
+routes.use(function timeLog (req, res, next) {
+    console.log('Time: ', Date.now())
+    next()
+})
+// define the home page route
+routes.get('/', function (req, res) {
+    res.send('Event home page')
+})
+// define the about route
+routes.get('/events', function (req, res) {
+    res.send('About birds')
+})
 
 module.exports = routes;

@@ -15,7 +15,7 @@ exports = app;
 
 */
 var express = require('express');
-const routes = require('./routes');
+var routes = require("./src/routes");
 var hostname = 'localhost';
 var port = 3000;
 var mongoose = require('mongoose');
@@ -34,13 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-var myRouter = express.Router();
-myRouter.route(routes)
-    .all(function(req,res){
-        res.json({message : "Bienvenue sur notre API ", methode : req.method});
-    });
-
-app.use('/', routes);
+app.use('/api/v1', routes);
 app.listen(port, hostname, function(){
     console.log("Mon serveur fonctionne sur http://"+ hostname +":"+port);
 });
