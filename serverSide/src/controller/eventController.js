@@ -82,29 +82,48 @@ app.listen(port, hostname, function(){
 */
 exports.getEvents = async (req, reply) => {
     try {
-        const events = await Event.find();
+        const events = await Event.find(function(err,res){
+            if (err){
+                reply.send(err);
+            }
+            reply.json(res);
+        });
         return events
     } catch (err) {
         throw boom.boomify(err)
     }
+
 }
 
 // Get single event by code
-exports.getSingleEvent = async (req, reply) => {
+exports.getSingleEvent = async (req, reply,next) => {
     try {
-        const code = req.params.code
-        const event = await Event.findById(code);
+        const code = req.params.code;
+        const event = await Event.findOne({code: code }, (err, data) => {
+            if (err) {
+                reply.send(err);
+            } else {
+                reply.json(data);
+                next();
+            }});
         return event
     } catch (err) {
         throw boom.boomify(err)
     }
+
 }
 
 // Add a new event
 exports.addEvent = async (req, reply) => {
     try {
         const event = new Event(req.body)
-        return event.save()
+        return event.save(function(err){
+            console.log (err);
+            if(err){
+                reply.send(err);
+            }
+            reply.json({message : 'le participant est maintenant stocké en base de données'});
+        });
     } catch (err) {
         throw boom.boomify(err)
     }
@@ -128,6 +147,7 @@ exports.deleteEvent = async (req, reply) => {
     try {
         const code = req.params.code
         const event = await Event.findByIdAndRemove(code);
+        req.json(event);
         return event
     } catch (err) {
         throw boom.boomify(err)

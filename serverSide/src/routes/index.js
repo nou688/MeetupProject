@@ -29,21 +29,26 @@ const eventController = require('../controller/eventController');
         handler: eventController.deleteEvent
     }
 ]*/
-var express = require('express');
-const routes = express.Router();
+var express = require('express')
+var routes = express()
+//const routes = app.Router();
 
 // middleware that is specific to this router
-routes.use(function timeLog (req, res, next) {
-    console.log('Time: ', Date.now())
-    next()
-})
+
 // define the home page route
 routes.get('/', function (req, res) {
     res.send('Event home page')
 })
 // define the about route
-routes.get('/events', function (req, res) {
+routes.route('/events')
+    .get(eventController.getEvents)
+    .post(eventController.addEvent);
+routes.route('/event/:code')
+    .get(eventController.getSingleEvent)
+    .put(eventController.updateEvent)
+    .delete(eventController.deleteEvent);
+/*routes.get('/events', function (req, res) {
     res.send('About birds')
-})
+})*/
 
 module.exports = routes;

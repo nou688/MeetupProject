@@ -15,6 +15,8 @@ exports = app;
 
 */
 var express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./src/config/swagger.json');
 var routes = require("./src/routes");
 var hostname = 'localhost';
 var port = 3000;
@@ -32,8 +34,7 @@ var app = express();
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-
+app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', routes);
 app.listen(port, hostname, function(){
     console.log("Mon serveur fonctionne sur http://"+ hostname +":"+port);
