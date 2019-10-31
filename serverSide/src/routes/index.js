@@ -1,3 +1,4 @@
+'use strict';
 // Import our Controllers
 const eventController = require('../controller/eventController');
 

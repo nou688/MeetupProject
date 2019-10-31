@@ -1,3 +1,4 @@
+'use strict';
 // External Dependancies
 const Member = require('./member');
 const mongoose = require('mongoose');
