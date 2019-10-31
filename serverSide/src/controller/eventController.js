@@ -115,15 +115,14 @@ exports.getSingleEvent = async (req, reply, next) => {
 exports.addEvent = async (req, reply) => {
   try {
     const event = new Event(req.body);
-    return event.save(function(err) {
-      console.log(err);
-      if (err) {
-        reply.send(err);
-      }
-      reply.json({
-        message: "le participant est maintenant stocké en base de données"
+    event.save(function(err) {
+          if (err) {
+              reply.send(err);
+          }
+          reply.json({
+              message: "l'evenement est maintenant stocké en base de données"
+          });
       });
-    });
   } catch (err) {
     throw boom.boomify(err);
   }
