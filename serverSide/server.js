@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 var express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./src/config/swagger.json');
