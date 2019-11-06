@@ -44,10 +44,12 @@ routes.get('/', function (req, res) {
 routes.route('/events')
     .get(eventController.getEvents)
     .post(eventController.addEvent);
-routes.route('/event/:code')
+routes.route('/event/:id')
     .get(eventController.getSingleEvent)
     .put(eventController.updateEvent)
     .delete(eventController.deleteEvent);
+routes.route('/members').get(eventController.getMemberFromEvent).
+put(eventController.addMemberToEvent);
 /*routes.get('/events', function (req, res) {
     res.send('About birds')
 })*/

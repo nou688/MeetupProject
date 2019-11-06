@@ -4,6 +4,7 @@
 const boom = require("boom");
 // Get Data Models
 const Event = require("../models/event");
+/* get all Event */
 exports.getEvents = async (req, reply) => {
   try {
     const events = await Event.find(function(err, res) {
@@ -17,11 +18,15 @@ exports.getEvents = async (req, reply) => {
     throw boom.boomify(err);
   }
 };
-// Get single event by code
+/**
+ * Get single event by code
+ *
+ *
+ ***/
 exports.getSingleEvent = async (req, reply, next) => {
   try {
-    const code = req.params.code;
-    const event = await Event.findOne({ code: code }, (err, data) => {
+    const id = req.params.id;
+    const event = await Event.findOne({ _id: id }, (err, data) => {
       if (err) {
         reply.send(err);
       } else {
@@ -44,7 +49,7 @@ exports.addEvent = async (req, reply) => {
         reply.send(err);
       }
       reply.json({
-        event: event,
+        event: event._id,
         message: "l'evenement est maintenant stocké en base de données"
       });
     });
@@ -56,12 +61,17 @@ exports.addEvent = async (req, reply) => {
 // Update an existing event
 exports.updateEvent = async (req, reply) => {
   try {
-    const id = req.params._id;
+    const id = req.params.id;
     const event = req.body;
     const { ...updateData } = event;
-    const update = await Event.findByIdAndUpdate(id, updateData, {
-      new: true
+    const update = await Event.findOneAndUpdate(id, updateData, {
+      new: true,
+      useFindAndModify: false
     });
+      reply.json({
+          event:updateData,
+          message: "event updated"
+      });
     return update;
   } catch (err) {
     throw boom.boomify(err);
@@ -71,11 +81,52 @@ exports.updateEvent = async (req, reply) => {
 // Delete a event
 exports.deleteEvent = async (req, reply) => {
   try {
-    const code = req.params.code;
-    const event = await Event.findByIdAndRemove(code);
-    req.json(event);
+    const id = req.body.id;
+    const event = await Event.findOneAndDelete(id,{
+        useFindAndModify: false  });
+      reply.json({
+          message: "event deleted"
+      });
     return event;
   } catch (err) {
     throw boom.boomify(err);
   }
+};
+
+exports.getMemberFromEvent = async (req, reply, next) => {
+    try {
+        const id_event = req.body.id;
+        const email = req.body.email;
+      const event = await Event.find( {_id: id_event },
+            { members: { $elemMatch: { email: email } } } );
+        return event;
+    } catch (err) {
+        throw boom.boomify(err);
+    }
+};
+
+exports.addMemberToEvent = async (req, reply) => {
+    var objMember={first_name: "nouha", last_name: "Gh", company_name: "Meritis",address: "14 rue pierre", city: "Paris", county: "France",state: "LA", zip: 70116, phone1: "504-621-8927", phone2: "504-845-1427", email: "nouha.ghribi@gmail.com", web: "http://www.bentonjohnbjr.com"};
+    try {
+       // const id = req.params.id;
+        const id = req.body.id;
+       // const {...updateData} = event;
+        const update = await Event.findOneAndUpdate(
+            id, {$push: {members: objMember}},
+            function (error, success) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    reply.json({
+                        member: objMember,
+                        message: "add member to event"
+                    });
+                    console.log(success);
+                }
+            });
+    }
+    catch (err) {
+        throw boom.boomify(err);
+    }
+
 };
