@@ -8,7 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-For development, you will only need Node.js and a node global package, Yarn, installed in your environement.
+For development, you will need Node.js and a node global package, mongoDB installed in your environement.
 
 ### Installing
 
@@ -30,10 +30,6 @@ npm install
 ## Simple build for production
 
     $ npm build
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 
 ## Authors
