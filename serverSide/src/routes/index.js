@@ -30,7 +30,7 @@ const eventController = require('../controller/eventController');
         handler: eventController.deleteEvent
     }
 ]*/
-var express = require('express')
+var express = require('express');
 var routes = express()
 //const routes = app.Router();
 
