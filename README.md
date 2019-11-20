@@ -52,7 +52,9 @@ Step 3: Run the Docker container locally:
 ```
 docker run -p 8081:8081  meetupproject
 ```
+## License
 
+See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 
 ## Authors
 
