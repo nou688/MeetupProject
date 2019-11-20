@@ -26,10 +26,32 @@ npm install
 ## Running the project
 
     $ npm start
+ Open http://localhost:3000 and take a look around
 
 ## Simple build for production
 
     $ npm build
+## Use Docker
+You can also run this app as a Docker container:
+
+Step 1: Clone the repo
+
+```
+git clone https://github.com/nou688/MeetupProject.git
+```
+
+
+Step 2: Build the Docker image
+
+```
+docker build -t meetupproject .
+```
+
+Step 3: Run the Docker container locally:
+
+```
+docker run -p 8081:8081  meetupproject
+```
 
 
 ## Authors
