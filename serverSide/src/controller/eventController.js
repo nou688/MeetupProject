@@ -50,7 +50,7 @@ exports.addEvent = async (req, reply) => {
       }
       reply.json({
         event: event._id,
-        message: "l'evenement est maintenant stocké en base de données"
+        message: "event updated"
       });
     });
   } catch (err) {

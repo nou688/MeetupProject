@@ -90,3 +90,47 @@ describe('/GET/:id event', () => {
     });
 });
 
+/*
+  * Test the /PUT/:id route
+  */
+describe('/PUT/:id event', () => {
+    it('it should UPDATE an event given the id', (done) => {
+        let event = new Event({ code: "36", title: "TDD  event", description :"TDD event", dateStart: "2019-11-27T18:30:49-0300",
+            dateEnd: "2019-11-28T18:30:49-0300" });
+        event.save((err, event) => {
+            chai.request(app)
+                .put('/api/v1/event/' + event.id)
+                .send({ code: "36", title: "TDD  event update", description :"TDD event", dateStart: "2019-11-27T18:30:49-0300",
+                    dateEnd: "2019-11-28T18:30:49-0300" })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql('event updated');
+                    res.body.event.should.have.property('title').eql("TDD  event update");
+                    done();
+                });
+        });
+    });
+});
+/*
+  * Test the /DELETE/:id route
+  */
+describe('/DELETE/:id event', () => {
+    it('it should DELETE an event given the id', (done) => {
+        let event = new Event({code: "37", title: "TDD  delete", description :"TDD event"});
+        event.save((err, event) => {
+            chai.request(app)
+                .delete('/api/v1/event/' + event.id)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('message').eql('event deleted');
+                   // res.body.result.should.have.property('ok').eql(1);
+                    //res.body.result.should.have.property('n').eql(1);
+                    done();
+                });
+        });
+    });
+});
+
+
