@@ -28,4 +28,4 @@ app.use('/api/v1', routes);
 app.listen(port, hostname, function(){
     console.log("Mon serveur fonctionne sur http://"+ hostname +":"+port);
 });
-exports = app;
+module.exports = app;
