@@ -5,7 +5,7 @@
 //process.env.NODE_ENV = 'test';
 
 let mongoose = require("mongoose");
-let event = require('../src/models/event');
+let Event = require('../src/models/event');
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -31,7 +31,7 @@ describe('/GET events', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
-                    res.body.length.should.be.eql(14);
+                    res.body.length.should.be.eql(17);
                     done();
                 });
         });
@@ -62,3 +62,31 @@ describe('/POST events', () => {
     });
 
 });
+
+/*
+  * Test the /GET/:id route
+  */
+describe('/GET/:id event', () => {
+    it('it should GET an event by the given id', (done) => {
+        let event = new Event({ code: "35", title: "fun safari", description :"fun safari", dateStart: "2019-11-27T18:30:49-0300",
+            dateEnd: "2019-11-28T18:30:49-0300" });
+        event.save((err, event) => {
+            chai.request(app)
+                .get('/api/v1/event/' + event.id)
+                .send(event)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('title');
+                    res.body.should.have.property('code');
+                    res.body.should.have.property('description');
+                    res.body.should.have.property('dateEnd');
+                    res.body.should.have.property('dateStart');
+                    res.body.should.have.property('_id').eql(event.id);
+                    done();
+                });
+        });
+
+    });
+});
+
